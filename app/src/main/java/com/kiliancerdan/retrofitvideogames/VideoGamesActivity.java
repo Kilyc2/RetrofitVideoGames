@@ -7,8 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.kiliancerdan.retrofitvideogames.Module.Game.Game;
+import com.kiliancerdan.retrofitvideogames.module.game.Game;
+import com.kiliancerdan.retrofitvideogames.response.game.GameResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,7 @@ public class VideoGamesActivity extends AppCompatActivity implements VideoGamesP
         getGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.getGame(192);
+                presenter.getGame("7334");
             }
         });
         Button getGameListButton = (Button)findViewById(R.id.button_game_list);
@@ -50,5 +52,10 @@ public class VideoGamesActivity extends AppCompatActivity implements VideoGamesP
     public void showGames(List<Game> games) {
         adapter.setGames(games);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

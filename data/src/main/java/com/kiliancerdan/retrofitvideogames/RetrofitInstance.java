@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 class RetrofitInstance {
 
-    private final static String API_KEY = "***";
+    private static final String API_KEY = "***";
     private static RetrofitInstance retrofitInstance = null;
     private Retrofit retrofit;
 
@@ -25,13 +25,20 @@ class RetrofitInstance {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
+
                 HttpUrl originalHttpUrl = original.url();
+
                 HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("token", API_KEY)
+                        .addQueryParameter("fields", "*")
+                        .addQueryParameter("search", "zelda")
                         .build();
 
-                Request.Builder requestBuilder = original.newBuilder().url(url);
+                Request.Builder requestBuilder = original.newBuilder()
+                        .header("X-Mashape-Key", API_KEY)
+                        .url(url);
+
                 Request request = requestBuilder.build();
+
                 return chain.proceed(request);
             }
         };
@@ -41,7 +48,7 @@ class RetrofitInstance {
                 .addInterceptor(loggingInterceptor);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.igdb.com/api/v1/")
+                .baseUrl("https://igdbcom-internet-game-database-v1.p.mashape.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();

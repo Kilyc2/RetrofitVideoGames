@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kiliancerdan.retrofitvideogames.Module.Game.Cover;
-import com.kiliancerdan.retrofitvideogames.Module.Game.Game;
+import com.kiliancerdan.retrofitvideogames.module.game.Cover;
+import com.kiliancerdan.retrofitvideogames.module.game.Game;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,7 +43,8 @@ class VideoGamesAdapter extends RecyclerView.Adapter<VideoGamesAdapter.ViewHolde
         Cover cover = game.getCover();
         if (cover != null) {
             holder.gameImage.setVisibility(View.VISIBLE);
-            setImage(holder, "https:".concat(cover.getUrl()));
+            setImage(holder, "https://images.igdb.com/igdb/image/upload/t_cover_big/"
+                    .concat(cover.getId()).concat(".png"));
         } else {
             holder.gameImage.setVisibility(View.INVISIBLE);
         }
@@ -52,7 +53,7 @@ class VideoGamesAdapter extends RecyclerView.Adapter<VideoGamesAdapter.ViewHolde
     private void setImage(ViewHolder holder, String urlCover) {
         Context context = holder.itemView.getContext();
         Uri uri = Uri.parse(urlCover);
-        Picasso.with(context).load(uri).into(holder.gameImage);
+        Picasso.with(context).load(uri).fit().centerInside().into(holder.gameImage);
     }
 
     @Override
