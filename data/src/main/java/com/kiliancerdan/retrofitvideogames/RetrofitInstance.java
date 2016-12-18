@@ -29,12 +29,12 @@ class RetrofitInstance {
                 HttpUrl originalHttpUrl = original.url();
 
                 HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("fields", "*")
-                        .addQueryParameter("search", "zelda")
+                        .addQueryParameter("fields", "id,name,slug,summary,aggregated_rating,first_release_date,cover,videos")
                         .build();
 
                 Request.Builder requestBuilder = original.newBuilder()
                         .header("X-Mashape-Key", API_KEY)
+                        .header("Accept", "application/json")
                         .url(url);
 
                 Request request = requestBuilder.build();

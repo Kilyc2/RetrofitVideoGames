@@ -1,13 +1,24 @@
 package com.kiliancerdan.retrofitvideogames.module.game;
 
+import java.util.List;
+
 public class Game {
 
+    private String id;
     private String name;
     private String summary;
     private double rating;
-    private int category;
     private String releaseDate;
+    private List<Video> videos;
     private Cover cover;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -33,20 +44,20 @@ public class Game {
         this.rating = rating;
     }
 
-    public int getCategory() {
-        return category;
-    }
-
-    public void setCategory(int category) {
-        this.category = category;
-    }
-
     public String getReleaseDate() {
         return releaseDate;
     }
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 
     public Cover getCover() {

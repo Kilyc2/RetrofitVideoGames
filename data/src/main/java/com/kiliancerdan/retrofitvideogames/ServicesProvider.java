@@ -5,19 +5,20 @@ import com.kiliancerdan.retrofitvideogames.response.game.GameResponse;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 interface ServicesProvider {
 
-    @Headers("Accept: application/json")
     @GET("games/")
-    Call<List<GameResponse>> getGames();
+    Call<List<GameResponse>> getGames(@Query("search") String search);
 
 
     @Headers({"Accept: application/json",
-            "X-Mashape-Key: MiHI6MYPqVmshNOW4nk86GEcEWotp1e6vPfjsnQivQOFjTCWJf"})
+            "X-Mashape-Key: ***"})
     @GET("games/{id}/")
     Call<List<GameResponse>> getGame(@Path("id") String idGame);
 

@@ -43,7 +43,7 @@ public class VideoGamesActivity extends AppCompatActivity implements VideoGamesP
         getGameListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.getGames();
+                presenter.getGames("zelda");
             }
         });
     }

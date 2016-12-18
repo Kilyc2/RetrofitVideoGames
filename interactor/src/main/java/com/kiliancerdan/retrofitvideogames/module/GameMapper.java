@@ -2,8 +2,10 @@ package com.kiliancerdan.retrofitvideogames.module;
 
 import com.kiliancerdan.retrofitvideogames.module.game.Cover;
 import com.kiliancerdan.retrofitvideogames.module.game.Game;
+import com.kiliancerdan.retrofitvideogames.module.game.Video;
 import com.kiliancerdan.retrofitvideogames.response.game.CoverResponse;
 import com.kiliancerdan.retrofitvideogames.response.game.GameResponse;
+import com.kiliancerdan.retrofitvideogames.response.game.VideoResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,11 +20,18 @@ public class GameMapper {
         List<Game> games = new ArrayList<>();
         for (GameResponse gameResponse : response) {
             Game game = new Game();
+            game.setId(gameResponse.getId());
             game.setName(gameResponse.getName());
-            game.setCategory(gameResponse.getCategory());
             game.setRating(gameResponse.getRating());
             game.setSummary(gameResponse.getSummary());
             game.setReleaseDate(getFormattedDate(gameResponse.getReleaseDate()));
+            List<Video> videos = new ArrayList<>();
+            if (gameResponse.getVideos() != null) {
+                for (VideoResponse videoResponse : gameResponse.getVideos()) {
+                    videos.add(convertResponseToVideo(videoResponse));
+                }
+            }
+            game.setVideos(videos);
             game.setCover(convertResponseToCover(gameResponse.getCover()));
             games.add(game);
         }
@@ -45,10 +54,17 @@ public class GameMapper {
         Cover cover = new Cover();
         if (response != null) {
             cover.setId(response.getId());
-            cover.setHeight(response.getHeight());
-            cover.setWidth(response.getWidth());
         }
         return cover;
+    }
+
+    private Video convertResponseToVideo(VideoResponse response) {
+        Video video = new Video();
+        if (response != null) {
+            video.setName(response.getName());
+            video.setId(response.getId());
+        }
+        return video;
     }
 
 }

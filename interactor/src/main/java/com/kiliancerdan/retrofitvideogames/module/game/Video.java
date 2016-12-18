@@ -1,11 +1,16 @@
 package com.kiliancerdan.retrofitvideogames.module.game;
 
-public class Cover {
+public class Video {
 
+    private String name;
     private String id;
 
-    public Cover() {
-        this.id = "";
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getId() {

@@ -14,8 +14,8 @@ class VideoGamesPresenter implements GamesInteractor.Callback {
         gamesInteractor = new GamesInteractor();
     }
 
-    void getGames() {
-        gamesInteractor.getGames(this);
+    void getGames(String search) {
+        gamesInteractor.getGames(this, search);
     }
 
     void getGame(String idGame) {

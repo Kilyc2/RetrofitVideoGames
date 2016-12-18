@@ -16,10 +16,10 @@ class GamesInteractor implements Callback<List<GameResponse>> {
     private Retrofit retrofit = RetrofitInstance.getRetrofit();
     private Callback callback;
 
-    void getGames(Callback callback) {
+    void getGames(Callback callback, String search) {
         this.callback = callback;
         ServicesProvider servicesProvider = retrofit.create(ServicesProvider.class);
-        servicesProvider.getGames().enqueue(this);
+        servicesProvider.getGames(search).enqueue(this);
     }
 
     void getGame(Callback callback, String idGame) {
