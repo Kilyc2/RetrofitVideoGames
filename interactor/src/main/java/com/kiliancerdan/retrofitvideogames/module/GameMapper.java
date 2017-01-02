@@ -16,26 +16,33 @@ import java.util.Locale;
 
 public class GameMapper {
 
-    public List<Game> convertResponseToGames(List<GameResponse> response) {
+    public List<Game> convertResponseToGames(List<GameResponse> gameResponseList) {
         List<Game> games = new ArrayList<>();
-        for (GameResponse gameResponse : response) {
-            Game game = new Game();
-            game.setId(gameResponse.getId());
-            game.setName(gameResponse.getName());
-            game.setRating(gameResponse.getRating());
-            game.setSummary(gameResponse.getSummary());
-            game.setReleaseDate(getFormattedDate(gameResponse.getReleaseDate()));
-            List<Video> videos = new ArrayList<>();
-            if (gameResponse.getVideos() != null) {
-                for (VideoResponse videoResponse : gameResponse.getVideos()) {
-                    videos.add(convertResponseToVideo(videoResponse));
-                }
+        if (gameResponseList != null) {
+            for (GameResponse gameResponse : gameResponseList) {
+                Game game = new Game();
+                game.setId(gameResponse.getId());
+                game.setName(gameResponse.getName());
+                game.setRating(gameResponse.getRating());
+                game.setSummary(gameResponse.getSummary());
+                game.setReleaseDate(getFormattedDate(gameResponse.getReleaseDate()));
+                List<Video> videos = convertResponseToVideos(gameResponse.getVideos());
+                game.setVideos(videos);
+                game.setCover(convertResponseToCover(gameResponse.getCover()));
+                games.add(game);
             }
-            game.setVideos(videos);
-            game.setCover(convertResponseToCover(gameResponse.getCover()));
-            games.add(game);
         }
         return games;
+    }
+
+    private List<Video> convertResponseToVideos(List<VideoResponse> videoResponseList) {
+        List<Video> videos = new ArrayList<>();
+        if (videoResponseList != null) {
+            for (VideoResponse videoResponse : videoResponseList) {
+                videos.add(convertResponseToVideo(videoResponse));
+            }
+        }
+        return videos;
     }
 
     private String getFormattedDate(Long dateInMilliseconds) {
