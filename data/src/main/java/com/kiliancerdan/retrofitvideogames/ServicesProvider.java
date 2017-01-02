@@ -17,9 +17,9 @@ interface ServicesProvider {
     Call<List<GameResponse>> getGames(@Query("search") String search);
 
 
+    @GET("games/{id}/")
     @Headers({"Accept: application/json",
             "X-Mashape-Key: ***"})
-    @GET("games/{id}/")
     Call<List<GameResponse>> getGame(@Path("id") String idGame);
 
 }

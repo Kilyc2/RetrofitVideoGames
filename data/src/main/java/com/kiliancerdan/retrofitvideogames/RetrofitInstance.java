@@ -25,7 +25,6 @@ class RetrofitInstance {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
-
                 HttpUrl originalHttpUrl = original.url();
 
                 HttpUrl url = originalHttpUrl.newBuilder()
@@ -38,7 +37,6 @@ class RetrofitInstance {
                         .url(url);
 
                 Request request = requestBuilder.build();
-
                 return chain.proceed(request);
             }
         };
