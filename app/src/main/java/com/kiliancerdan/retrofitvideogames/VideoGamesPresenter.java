@@ -1,10 +1,16 @@
 package com.kiliancerdan.retrofitvideogames;
 
+import com.kiliancerdan.retrofitvideogames.module.GameMapper;
 import com.kiliancerdan.retrofitvideogames.module.game.Game;
+import com.kiliancerdan.retrofitvideogames.response.game.GameResponse;
 
 import java.util.List;
 
-class VideoGamesPresenter implements GamesInteractor.Callback {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+class VideoGamesPresenter implements Callback<List<GameResponse>> {
 
     private VideoGamesView view;
     private GamesInteractor gamesInteractor;
@@ -23,13 +29,15 @@ class VideoGamesPresenter implements GamesInteractor.Callback {
     }
 
     @Override
-    public void onGamesSuccess(List<Game> games) {
+    public void onResponse(Call<List<GameResponse>> call, Response<List<GameResponse>> response) {
+        GameMapper mapper = new GameMapper();
+        List<Game> games = mapper.convertResponseToGames(response.body());
         view.showGames(games);
     }
 
     @Override
-    public void onGamesFailed(String message) {
-        view.showError(message);
+    public void onFailure(Call<List<GameResponse>> call, Throwable t) {
+        view.showError(t.getMessage());
     }
 
     interface VideoGamesView {

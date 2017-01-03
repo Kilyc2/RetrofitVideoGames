@@ -24,19 +24,19 @@ class RetrofitInstance {
         Interceptor requestInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                HttpUrl originalHttpUrl = original.url();
+                Request originalRequest = chain.request();
+                HttpUrl originalUrl = originalRequest.url();
 
-                HttpUrl url = originalHttpUrl.newBuilder()
+                HttpUrl urlWithParams = originalUrl.newBuilder()
                         .addQueryParameter("fields", "id,name,slug,summary,aggregated_rating,first_release_date,cover,videos")
                         .build();
 
-                Request.Builder requestBuilder = original.newBuilder()
+                Request request = originalRequest.newBuilder()
                         .header("X-Mashape-Key", API_KEY)
                         .header("Accept", "application/json")
-                        .url(url);
+                        .url(urlWithParams)
+                        .build();
 
-                Request request = requestBuilder.build();
                 return chain.proceed(request);
             }
         };
